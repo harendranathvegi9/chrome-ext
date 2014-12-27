@@ -37,6 +37,12 @@ module.exports = function(grunt) {
           }, {
             src: './bower_components/angular-route/angular-route.min.js.map',
             dest: './js/vendor/angular-route.min.js.map'
+          }, {
+            src: './bower_components/angular-sanitize/angular-sanitize.min.js',
+            dest: './js/vendor/angular-sanitize.min.js'
+          }, {
+            src: './bower_components/angular-sanitize/angular-sanitize.min.js.map',
+            dest: './js/vendor/angular-sanitize.min.js.map'
           },
           /*jquery*/
           {
@@ -94,7 +100,9 @@ module.exports = function(grunt) {
           define: true,
           jQuery: true,
           $: true,
-          require: true
+          require: true,
+          console:true,
+          _:true
         },
         reporter: require('jshint-stylish')
       },
@@ -136,5 +144,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-angular-templates');
 
   grunt.registerTask('firstrun', ['clean:wpWeather', 'copy:wpWeather']);
-  grunt.registerTask('default', ['jshint', 'less','watch']);
+  grunt.registerTask('default', ['jshint', 'less', 'watch']);
 };

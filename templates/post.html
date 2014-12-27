@@ -1,0 +1,31 @@
+<div class="container" ng-if="selectedPostId && selectedPost">
+  <div class="row">
+    <div class="col-sm-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h1 ng-bind-html="selectedPost.title"></h1>
+      </div>
+      <div class="panel-body" ng-bind-html="selectedPost.content"></div>
+      <div class="panel-footer">
+        <h3>Comments</h3>
+        <hr>
+        <ul class="media-list" ng-if="comments.comments">
+          <li id="comment-{{comment.ID}}" class="media" ng-repeat="comment in comments.comments track by comment.ID | orderBy:'ID'">
+            <a class="media-left" ng-href="{{comment.author.URL}}">
+              <img ng-src="{{comment.author.avatar_URL}}" alt="{{comment.author.name}}">
+            </a>
+            <div class="media-body">
+              <a ng-href="{{comment.author.URL}}"><h4 class="media-heading" ng-bind-html="comment.author.name"></h4></a>
+              <p ng-bind-html="comment.content"></p>
+            </div>
+          </li>
+        </ul>
+        <p ng-if="!comments.comments.length">This post has no comments.</p>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+<div class="alert alert-danger" role="alert" ng-if="!selectedPostId">
+  <strong>Oh snap!</strong> Seems like you will have to go back to the homepage...
+</div>
