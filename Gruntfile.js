@@ -16,6 +16,12 @@ module.exports = function(grunt) {
         options: {
           force: true
         }
+      },
+      js: {
+        src: ['./js/wpWeather.js'],
+        options: {
+          force: true
+        }
       }
     },
     copy: {
@@ -56,6 +62,9 @@ module.exports = function(grunt) {
           {
             src: './bower_components/requirejs/require.js',
             dest: './js/vendor/require.js'
+          }, {
+            src: './bower_components/almond/almond.js',
+            dest: './js/vendor/almond.js'
           },
           /*underscore*/
           {
@@ -101,8 +110,8 @@ module.exports = function(grunt) {
           jQuery: true,
           $: true,
           require: true,
-          console:true,
-          _:true
+          console: true,
+          _: true
         },
         reporter: require('jshint-stylish')
       },
@@ -130,6 +139,24 @@ module.exports = function(grunt) {
         }
       }
     },
+    connect: {
+      wpWeather: {
+        port: 9000
+      }
+    },
+    requirejs: {
+      js: {
+        options: {
+          baseUrl: './js',
+          mainConfigFile: 'js/rjsConfig.js',
+          deps: ['main','app', 'routes'],
+          out: 'js/wpWeather.js',
+          optimize: 'uglify2',
+          name: './vendor/almond',
+          preserveLicenseComments:false
+        }
+      }
+    }
   });
 
   // These plugins provide necessary tasks.
@@ -142,7 +169,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-angular-templates');
+  grunt.loadNpmTasks('grunt-connect');
 
   grunt.registerTask('firstrun', ['clean:wpWeather', 'copy:wpWeather']);
-  grunt.registerTask('default', ['jshint', 'less', 'watch']);
+  grunt.registerTask('default', ['clean:js', 'jshint', 'less', 'requirejs', 'watch']);
 };
